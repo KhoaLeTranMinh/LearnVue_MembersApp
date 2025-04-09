@@ -1,9 +1,8 @@
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script setup lang="ts">
 import { useMembers } from '@/stores/members'
 import { ref, computed, watch } from 'vue'
 import { Search, Plus } from 'lucide-vue-next'
-// Reactive state
+
 const searchQuery = ref('')
 const useMember = useMembers()
 const allMembers = [...useMember.all.values()]
@@ -55,12 +54,6 @@ const paginatedMembers = computed(() => {
   const startIndex = (currentPage.value - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   return filteredMembers.value.slice(startIndex, endIndex)
-  // const filteredMemberLength = filteredMembers.value.length;
-  // const startIndex = 0;
-  // const endIndex =
-  //   filteredMemberLength < itemsPerPage ? filteredMemberLength : itemsPerPage;
-
-  // return filteredMembers.value.slice(startIndex, endIndex);
 })
 
 // Whenever search query changes, reset the current page to 1
@@ -95,15 +88,9 @@ const prevPage = () => {
     currentPage.value--
   }
 }
-
-// const computedCurrentPage = computed(() => {
-//   return
-// });
 </script>
 
-<style scoped>
-/* You can keep your scoped styles or customize further if needed */
-</style>
+<style scoped></style>
 
 <template>
   <div class="p-4 space-y-4 m-3">
