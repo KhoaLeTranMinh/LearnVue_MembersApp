@@ -1,95 +1,100 @@
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script setup lang="ts">
-import { useMembers } from "@/stores/members";
-import { ref, computed, watch } from "vue";
-import { Search, Plus } from "lucide-vue-next";
+import { useMembers } from '@/stores/members'
+import { ref, computed, watch } from 'vue'
+import { Search, Plus } from 'lucide-vue-next'
 // Reactive state
-const searchQuery = ref("");
-const useMember = useMembers();
-const allMembers = [...useMember.all.values()];
+const searchQuery = ref('')
+const useMember = useMembers()
+const allMembers = [...useMember.all.values()]
+
+const props = defineProps<{
+  isAdmin: boolean
+}>()
 
 const filteredMembers = computed(() => {
   if (!searchQuery.value) {
-    return allMembers;
+    return allMembers
   }
   return allMembers.filter(
     (m) =>
       m.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      m.email.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
-});
+      m.email.toLowerCase().includes(searchQuery.value.toLowerCase()),
+  )
+})
 
 // Methods
 
 function downloadCsv() {
-  let csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += "Name,Email,Enabled\n";
+  let csvContent = 'data:text/csv;charset=utf-8,'
+  csvContent += 'Name,Email,Enabled\n'
   allMembers.forEach((m) => {
-    csvContent += `${m.name},${m.email},${m.enabled}\n`;
-  });
+    csvContent += `${m.name},${m.email},${m.enabled}\n`
+  })
 
-  const encodedUri = encodeURI(csvContent);
-  const link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", "members.csv");
-  document.body.appendChild(link);
-  console.log(link);
-  link.click();
-  document.body.removeChild(link);
+  const encodedUri = encodeURI(csvContent)
+  const link = document.createElement('a')
+  link.setAttribute('href', encodedUri)
+  link.setAttribute('download', 'members.csv')
+  document.body.appendChild(link)
+  console.log(link)
+  link.click()
+  document.body.removeChild(link)
 }
 
 function showAllMembers() {
   // Reset the search query to show all members
-  searchQuery.value = "";
+  searchQuery.value = ''
 }
 
-const currentPage = ref(1);
-const itemsPerPage = 5;
+const currentPage = ref(1)
+const itemsPerPage = 5
 
 // Modified computed property for pagination
 const paginatedMembers = computed(() => {
-  const startIndex = (currentPage.value - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  return filteredMembers.value.slice(startIndex, endIndex);
+  const startIndex = (currentPage.value - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  return filteredMembers.value.slice(startIndex, endIndex)
   // const filteredMemberLength = filteredMembers.value.length;
   // const startIndex = 0;
   // const endIndex =
   //   filteredMemberLength < itemsPerPage ? filteredMemberLength : itemsPerPage;
 
   // return filteredMembers.value.slice(startIndex, endIndex);
-});
+})
 
 // Whenever search query changes, reset the current page to 1
 watch(
   () => searchQuery.value,
   (newValue) => {
     // Reset current page when search query changes
-    currentPage.value = 1;
+    currentPage.value = 1
     if (filteredMembers.value.length === 0) {
-      currentPage.value = 0;
+      currentPage.value = 0
     }
-  }
-);
+  },
+)
 
 // Total pages computation
 const totalPages = computed(() => {
   return searchQuery.value
     ? Math.ceil(filteredMembers.value.length / itemsPerPage)
-    : Math.ceil(allMembers.length / itemsPerPage);
+    : Math.ceil(allMembers.length / itemsPerPage)
   // return Math.ceil(allMembers.length / itemsPerPage);
-});
+})
 
 // Pagination methods
 const nextPage = () => {
   if (currentPage.value < totalPages.value) {
-    currentPage.value++;
+    currentPage.value++
   }
-};
+}
 
 const prevPage = () => {
   if (currentPage.value > 1) {
-    currentPage.value--;
+    currentPage.value--
   }
-};
+}
 
 // const computedCurrentPage = computed(() => {
 //   return
@@ -103,7 +108,9 @@ const prevPage = () => {
 <template>
   <div class="p-4 space-y-4 m-3">
     <div class="flex items-center justify-between">
-      <h1 class="text-xl font-bold">Quản lý thành viên</h1>
+      <h1 class="text-xl font-bold">
+        {{ props.isAdmin ? 'Quản lý quản trị viên' : ' Quản lý thành viên' }}
+      </h1>
     </div>
 
     <div class="flex items-center gap-4">
@@ -154,12 +161,8 @@ const prevPage = () => {
       <table class="min-w-full">
         <thead class="">
           <tr>
-            <th class="px-6 py-3 text-left font-medium text-gray-500 tracking-wider">
-              Tên
-            </th>
-            <th class="px-6 py-3 text-left font-medium text-gray-500 tracking-wider">
-              Email
-            </th>
+            <th class="px-6 py-3 text-left font-medium text-gray-500 tracking-wider">Tên</th>
+            <th class="px-6 py-3 text-left font-medium text-gray-500 tracking-wider">Email</th>
             <th class="px-6 py-3 text-left font-medium text-gray-500 tracking-wider">
               Enable / Disable
             </th>
@@ -178,7 +181,7 @@ const prevPage = () => {
                   @change="useMember.toggleEnable(member.id)"
                 />
                 <span class="ml-2 text-gray-700">
-                  {{ member.enabled ? "Enabled" : "Disabled" }}
+                  {{ member.enabled ? 'Enabled' : 'Disabled' }}
                 </span>
               </label>
             </td>
@@ -188,9 +191,7 @@ const prevPage = () => {
 
       <div class="px-6 py-4 flex items-center justify-between border-t">
         <div class="flex items-center">
-          <span class="text-gray-700">
-            Showing page {{ currentPage }} of {{ totalPages }}
-          </span>
+          <span class="text-gray-700"> Showing page {{ currentPage }} of {{ totalPages }} </span>
         </div>
         <div class="flex items-center space-x-4">
           <button

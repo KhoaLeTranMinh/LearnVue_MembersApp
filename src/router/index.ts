@@ -1,23 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import MembersControllerPage from '@/views/MembersControllerPage.vue'
-import AdminsControllerPage from '@/views/AdminsControllerPage.vue'
+import MembersAdminControllerPage from '@/views/MembersAdminControllerPage.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/members',
       name: 'MembersPage',
-      component: MembersControllerPage  ,
+      component: MembersAdminControllerPage,
+      props: {
+        isAdmin: false,
+      },
     },
     {
       path: '/admins',
       name: 'AdminsPage',
-      component: AdminsControllerPage  ,
+      component: MembersAdminControllerPage,
+      props: {
+        isAdmin: true,
+      },
     },
-
-
-
   ],
 })
 
