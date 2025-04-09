@@ -21,9 +21,7 @@ const router = createRouter({
 				isAdmin: true,
 			},
 		},
-	],
+	]
 })
 
-export default router
-{
-}
+
