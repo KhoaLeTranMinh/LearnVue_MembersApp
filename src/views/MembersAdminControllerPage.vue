@@ -2,6 +2,7 @@
 import { useMembers } from '@/stores/members'
 import { ref, computed, watch } from 'vue'
 import { Search, Plus } from 'lucide-vue-next'
+import Switch from '@/components/ui/switch/Switch.vue'
 
 const searchQuery = ref('')
 const useMember = useMembers()
@@ -110,7 +111,7 @@ const prevPage = () => {
             type="text"
             v-model="searchQuery"
             placeholder="Tìm kiếm thành viên"
-            class="w-full px-4 py-2 border border-black focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-2xl font-[400]"
+            class="w-full px-4 py-2 border border-black focus:outline-none focus:ring-1 focus:ring-purple-800 rounded-2xl font-[400]"
           />
           <Search
             class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -119,7 +120,7 @@ const prevPage = () => {
       </div>
       <div class="relative flex-1">
         <button
-          class="w-full px-4 py-2 border border-black focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-2xl font-[400] text-left"
+          class="w-full px-4 py-2 border border-black focus:outline-none focus:ring-1 focus:ring-purple-800 rounded-2xl font-[400] text-left"
         >
           Thêm thành viên
         </button>
@@ -131,7 +132,7 @@ const prevPage = () => {
 
       <div class="relative flex-1">
         <button
-          class="w-full px-4 py-2 border-1 border-black focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-2xl font-[400] text-left"
+          class="w-full px-4 py-2 border-1 border-black focus:outline-none focus:ring-1 focus:ring-purple-800 rounded-2xl font-[400] text-left"
           @click="downloadCsv"
         >
           Tải CSV
@@ -161,12 +162,13 @@ const prevPage = () => {
             <td class="px-6 py-4 whitespace-nowrap">{{ member.email }}</td>
             <td class="px-6 py-4">
               <label class="inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  class="form-checkbox h-5 w-5 text-blue-600"
-                  :checked="member.enabled"
-                  @change="useMember.toggleEnable(member.id)"
+                <Switch
+                  :id="member.id"
+                  :model-value="member.enabled"
+                  @update:model-value="useMember.toggleEnable(member.id)"
+                  class="border-0 data-[state=checked]:bg-purple-800"
                 />
+
                 <span class="ml-2 text-gray-700">
                   {{ member.enabled ? 'Enabled' : 'Disabled' }}
                 </span>
