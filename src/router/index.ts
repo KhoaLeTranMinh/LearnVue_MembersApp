@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import MembersControllerPage from '@/views/MembersAdminControllerPage.vue'
+import AddMemberForm from '@/components/AddMemberForm.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
         isAdmin: true,
       },
     },
+    {
+      path:'/testing',
+      name: 'TestingPage',
+      component: AddMemberForm
+    }
   ],
 })
 
