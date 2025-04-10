@@ -7,7 +7,7 @@ export interface Member {
 	email: string
 	enabled: boolean
 }
-interface MembersState {
+export interface MembersState {
 	ids: string[]
 	all: Map<string, Member>
 }
@@ -59,3 +59,5 @@ export const useMembers = defineStore("users", {
 		},
 	},
 })
+
+export const MembersStoreType = typeof useMembers
