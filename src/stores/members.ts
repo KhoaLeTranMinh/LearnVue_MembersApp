@@ -59,5 +59,3 @@ export const useMembers = defineStore("users", {
 		},
 	},
 })
-
-export const MembersStoreType = typeof useMembers
