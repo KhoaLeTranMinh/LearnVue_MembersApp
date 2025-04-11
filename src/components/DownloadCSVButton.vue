@@ -27,3 +27,5 @@ function downloadCsv() {
 <template>
 	<CustumButton text="Tải CSV" :handle-click="downloadCsv" />
 </template>
+
+<style scoped></style>

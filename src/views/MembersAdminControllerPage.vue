@@ -45,7 +45,7 @@ function showAllMembers() {
 
 <template>
 	<div class="p-4 space-y-4 m-3">
-		<div class="flex items-center justify-between">
+		<div class="flex items-center justify-between mb-16">
 			<h1 class="text-xl font-bold">
 				{{ props.isAdmin ? "Quản lý quản trị viên" : " Quản lý thành viên" }}
 			</h1>

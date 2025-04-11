@@ -3,12 +3,12 @@ import type { Member } from "@/stores/members"
 import { useMembers } from "@/stores/members"
 import { ref, computed, nextTick, watch } from "vue"
 import { useDebounce } from "@vueuse/core"
+import { Search as SearchIcon } from "lucide-vue-next"
 defineProps<{}>()
 
 const searchQuery = defineModel<string>("searchQuery", { required: true })
 const debouncedSearchQuery = defineModel<string>("debouncedSearchQuery", { required: true })
-// const showSuggestions = defineModel<boolean>("showSuggestions", { required: true })
-// const highlightedIndex = defineModel<number>("highlightedIndex", { required: true })const showSuggestions = ref(false)
+
 const highlightedIndex = ref(0)
 const showSuggestions = ref(false)
 
@@ -92,7 +92,7 @@ watch(
 				@keydown="handleKeydown"
 				class="w-full px-4 py-2 border border-black focus:outline-none focus:ring-1 focus:ring-purple-800 rounded-2xl font-[400]"
 			/>
-			<Search class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+			<SearchIcon class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
 
 			<!-- Suggestions Dropdown -->
 			<div

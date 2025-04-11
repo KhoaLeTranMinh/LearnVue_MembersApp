@@ -1,5 +1,9 @@
+/* @import "bootstrap/scss/bootstrap"; */
+/* @config "../../tailwind.config.js" */
 @import 'tailwindcss';
 @import 'tw-animate-css';
+
+
 
 
 
@@ -72,15 +76,15 @@
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  /* --sidebar-accent: oklch(0.97 0 0); */ /*This is responsible for the changing color of link when clicked */
-  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0); 
+  --sidebar-accent: oklch(0.97 0 0); /*This is responsible for the changing color of link when clicked */
+   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-}
+} 
 
-/* .dark {
+.dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
@@ -113,7 +117,7 @@
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-} */
+}
 
 @layer base {
   * {
