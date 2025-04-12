@@ -3,13 +3,11 @@ import type { MembersState } from "@/stores/members"
 import type { Member } from "@/stores/members"
 import Switch from "@/components/ui/switch/Switch.vue"
 import { useMembers } from "@/stores/members"
-
+import { ChevronLeft, ChevronRight } from "lucide-vue-next"
 import { computed, ref, watch } from "vue"
 defineProps<{}>()
 const membersStore = useMembers()
 const allMembers = ref([...membersStore.all.values()])
-// const currentPage = defineModel<number>("currentPage", { required: true })
-// const totalPages = defineModel<number>("totalPages", { required: true })
 const searchQuery = defineModel<string>("searchQuery", { required: true })
 const debouncedSearchQuery = defineModel<string>("debouncedSearchQuery", {
 	required: true,
@@ -92,7 +90,7 @@ watch(
 								:id="member.id"
 								:model-value="member.enabled"
 								@update:model-value="membersStore.toggleEnable(member.id)"
-								class="border-0 data-[state=checked]:bg-purple-800"
+								class="border-0"
 							/>
 
 							<span class="ml-2 text-gray-700">
@@ -104,24 +102,14 @@ watch(
 			</tbody>
 		</table>
 
-		<div class="px-6 py-4 flex items-center justify-between border-t">
-			<div class="flex items-center">
-				<span class="text-gray-700"> Showing page {{ currentPage }} of {{ totalPages }} </span>
-			</div>
-			<div class="flex items-center space-x-4">
-				<button
-					@click="prevPage"
-					:disabled="currentPage === 1"
-					class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-				>
-					Previous
+		<div class="py-4 flex items-center justify-center border-t">
+			<div class="flex space-x-0">
+				<button @click="prevPage" :disabled="currentPage === 1" class="">
+					<ChevronLeft></ChevronLeft>
 				</button>
-				<button
-					@click="nextPage"
-					:disabled="currentPage === totalPages"
-					class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-				>
-					Next
+				<span class="text-gray-700 py-1"> {{ currentPage }} / {{ totalPages }} </span>
+				<button @click="nextPage" :disabled="currentPage === totalPages" class="">
+					<ChevronRight></ChevronRight>
 				</button>
 			</div>
 		</div>

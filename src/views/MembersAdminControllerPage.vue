@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, watch } from "vue"
 
 import { useModal } from "@/composables/modal"
 
@@ -9,6 +9,7 @@ import Table from "../components/Table.vue"
 
 import AddMemberButton from "../components/AddMemberButton.vue"
 import DownloadCSVButton from "../components/DownloadCSVButton.vue"
+import { useMembers } from "@/stores/members"
 
 const searchQuery = ref("")
 const debouncedSearchQuery = useDebounce(searchQuery, 300)
@@ -16,7 +17,14 @@ const modal = useModal()
 const props = defineProps<{
 	isAdmin: boolean
 }>()
-
+const membersStore = useMembers()
+const totalMembers = ref(membersStore.all.size)
+watch(
+	() => membersStore.all.size,
+	(newValue) => {
+		totalMembers.value = newValue
+	}
+)
 function showAllMembers() {
 	// Reset the search query to show all members
 	searchQuery.value = ""
@@ -45,11 +53,13 @@ function showAllMembers() {
 
 <template>
 	<div class="p-4 space-y-4 m-3">
-		<div class="flex items-center justify-between mb-16">
+		<div class="flex items-center justify-between">
 			<h1 class="text-xl font-bold">
 				{{ props.isAdmin ? "Quản lý quản trị viên" : " Quản lý thành viên" }}
 			</h1>
 		</div>
+		<div class="">{{ totalMembers }} members</div>
+		<div class="w-full h-px bg-gray-400 mb-12"></div>
 
 		<div class="flex items-center gap-4">
 			<button class="px-4 py-2" @click="showAllMembers">

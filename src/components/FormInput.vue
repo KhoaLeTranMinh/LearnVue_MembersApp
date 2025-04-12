@@ -22,7 +22,7 @@ function handleInput(e: Event) {
 			<input
 				:type="type"
 				:id="name"
-				class="w-full border border-black focus: outline-none focus:border-blue-500 rounded-lg p-2 bg-purple-100"
+				class="w-full border border-black focus: outline-none focus:border-black rounded-lg p-2 bg-gray-200"
 				:value="modelValue"
 				@input="handleInput"
 			/>

@@ -13,9 +13,9 @@ const highlightedIndex = ref(0)
 const showSuggestions = ref(false)
 
 const selectedMember = ref("")
-const useMember = useMembers()
+const membersStore = useMembers()
 
-const allMembers = ref([...useMember.all.values()])
+const allMembers = ref([...membersStore.all.values()])
 const searchSuggestions = computed(() => {
 	if (!searchQuery.value) return []
 	if (!debouncedSearchQuery.value) return []
@@ -72,11 +72,11 @@ function scrollToHighlighted() {
 }
 
 watch(
-	() => useMember.all,
+	() => membersStore.all,
 	(newAll) => {
 		allMembers.value = [...newAll.values()]
 	},
-	{ deep: true }
+	{ deep: true, immediate: true }
 )
 </script>
 
